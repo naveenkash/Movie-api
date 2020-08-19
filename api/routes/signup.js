@@ -7,7 +7,6 @@ const createJwtToken = require("../helper-methods/createJwtToken");
 const validateEmail = require("../helper-methods/validateEmail");
 const validatePassword = require("../helper-methods/validatePassword");
 router.post("/local", async (req, res, next) => {
-  console.log("singup local started");
   const body = req.body;
   try {
     if (!validateEmail(body.email)) {
@@ -48,7 +47,6 @@ router.post("/local", async (req, res, next) => {
       return;
     }
   } catch (error) {
-    console.log(error);
     next(apiError.interServerError(error.message));
     return;
   }
