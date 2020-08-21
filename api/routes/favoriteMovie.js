@@ -12,7 +12,15 @@ router.post("/update", authenticateUser, async (req, res, next) => {
       user_id: body.user_id,
     });
     if (favMovieExist) {
-      next(apiError.badRequest("Movie already exist"));
+      const deletedFavMovie = await favoriteMovies.findOneAndDelete({
+        id: body.id,
+        user_id: body.user_id,
+      });
+      if (deletedFavMovie) {
+        res.status(201).json({
+          removed: true,
+        });
+      }
       return;
     }
     const favMovie = new favoriteMovies({
